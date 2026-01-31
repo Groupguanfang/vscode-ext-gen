@@ -30,7 +30,9 @@ export async function processLocale(options: GenerateOptions, generateResult: Ge
 
 async function applyLocaleStrings(options: GenerateOptions, generateResult: GenerateResult): Promise<GenerateResult> {
   const cwd = options.cwd ?? process.cwd()
-  const filepath = options.locale ? path.resolve(cwd, `package.nls.${options.locale}.json`) : path.resolve(cwd, 'package.nls.json')
+  const filepath = typeof options.locale === 'string'
+    ? path.resolve(cwd, `package.nls.${options.locale}.json`)
+    : path.resolve(cwd, 'package.nls.json')
   const messages: Record<string, string> = JSON.parse(await fs.readFile(filepath, 'utf-8'))
 
   let replacedDts = generateResult.dts
