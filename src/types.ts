@@ -25,7 +25,6 @@ export interface GenerateOptions {
   extensionScope?: string
   /**
    * The locale to read from nls file
-   * @default 'en'
    */
   locale?: string
 }
