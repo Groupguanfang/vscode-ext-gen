@@ -9,6 +9,8 @@ export async function generate(packageJson: Manifest, options: GenerateOptions =
   const dts = generateDTS(packageJson, options)
   const markdown = generateMarkdown(packageJson)
   const result = { dts, markdown }
+  if (!options.locale)
+    return result
   return await processLocale(options, result)
 }
 

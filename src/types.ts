@@ -26,7 +26,7 @@ export interface GenerateOptions {
   /**
    * The locale to read from nls file
    */
-  locale?: string
+  locale?: string | true
 }
 
 export interface GenerateResult {

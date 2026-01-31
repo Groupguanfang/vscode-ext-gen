@@ -12,7 +12,7 @@ export async function processLocale(options: GenerateOptions, generateResult: Ge
   })
   const choices = files.map(file => path.basename(file, '.json').replace('package.nls.', ''))
 
-  if (!locale) {
+  if (locale === true) {
     const nlsFileIsExists = await fs.stat(path.resolve(cwd, 'package.nls.json'))
       .then(stat => stat.isFile())
       .catch(() => false)
@@ -22,7 +22,7 @@ export async function processLocale(options: GenerateOptions, generateResult: Ge
       throw new Error(`package.nls.json not found, available locales: ${choices.join(', ')}`)
   }
 
-  if (choices.includes(locale))
+  if (choices.includes(locale!))
     return await applyLocaleStrings(options, generateResult)
   else
     throw new Error(`${locale} locale not found, available locales: ${choices.join(', ')}`)
