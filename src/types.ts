@@ -56,7 +56,15 @@ export interface Manifest {
     chatParticipants?: ChatParticipant[]
     commands?: Command[]
     configuration?: Configuration | Configuration[]
+    taskDefinitions?: TaskDefinition[]
   }
+}
+
+export interface TaskDefinition {
+  type?: string
+  properties?: Record<string, Property>
+  when?: string
+  required?: string[]
 }
 
 export interface Language {

@@ -38,6 +38,12 @@ describe('fixtures', async () => {
               : `${basename(dir)}`
 
           const { dts, markdown } = await generate(json, { cwd: dir, extensionScope, locale })
+
+          if (json.contributes?.taskDefinitions?.length) {
+            expect(dts).toContain('export type TaskType =')
+            expect(dts).toContain('export interface TaskPropertiesMap {')
+          }
+
           await expect(dts).toMatchFileSnapshot(`./output/${filename}.ts`)
 
           const readmeLines = [
@@ -58,6 +64,14 @@ describe('fixtures', async () => {
             '## Configuration List',
             '',
             markdown.configsList,
+            ...(json.contributes?.taskDefinitions?.length
+              ? [
+                  '',
+                  '## Task Definitions',
+                  '',
+                  markdown.taskDefinitionsTable,
+                ]
+              : []),
           ]
           await expect(readmeLines.join('\n')).toMatchFileSnapshot(`./output/${basename(filename)}.README.md`)
         }
